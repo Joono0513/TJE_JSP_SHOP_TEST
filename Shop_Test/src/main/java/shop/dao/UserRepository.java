@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import shop.dto.PersistentLogin;
-import shop.dto.Product;
 import shop.dto.User;
 
 public class UserRepository extends JDBConnection {
@@ -15,7 +14,27 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(User user) {
+		int result = 0;
+		String sql = " INSERT INTO USER "
+				   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW()) ";
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString( 1, user.getId() );
+			psmt.setString( 2, user.getPassword() );
+			psmt.setString( 3, user.getName() );
+			psmt.setString( 4, user.getGender() );
+			psmt.setString( 5, user.getBirth() );
+			psmt.setString( 6, user.getMail() );
+			psmt.setString( 7, user.getPhone() );
+			psmt.setString( 8, user.getAddress() );
+			result = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("회원 등록 시, 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	
@@ -26,10 +45,28 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User login(String id, String pw) {
+		User user = new User();
+		String sql = " SELECT * "
+				   + " FROM USER "
+				   + " WHERE ID = ? AND PASSWORD = ? ";
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString( 1, id );
+			psmt.setString( 2, pw );
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				user.setId( rs.getString("id") );
+				user.setPassword( rs.getString("pw") );
+				return user;
+			}
+		} catch (SQLException e) {
+			System.err.println("회원 조회 시, 예외 발생");
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
-	
 	
 	
 	/**
@@ -39,7 +76,34 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User getUserById(String id) {
+		User user = new User();
+		String sql = " SELECT * "
+				   + " FROM USER "
+				   + " WHERE ID = ? ";
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString( 1, id );
+			rs = psmt.executeQuery();
+			
+			if ( rs.next() ) {
+				user.setId( rs.getString("id") );
+				user.setPassword( rs.getString("password") );
+				user.setName( rs.getString("name") );
+				user.setGender( rs.getString("gender") );
+				user.setBirth( rs.getString("birth")  );
+				user.setMail( rs.getString("mail")  );
+				user.setPhone( rs.getString("phone") );
+				user.setAddress( rs.getString("address") );
+				user.setRegistDay( rs.getString("reg_date") );	
+				return user;
+			}
+	
+		} catch (SQLException e) {
+			System.err.println("사용자 정보 확인 시, 예외 발생");
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
@@ -49,7 +113,32 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int update(User user) {
+		int result = 0;
+		String sql = " UPDATE USER "
+				   + " SET ID = ?, NAME = ?, "
+				   + " GENDER = ?, BIRTH = ?, "
+				   + " MAIL = ?, PHONE = ?, "
+				   + " ADDRESS = ? "
+				   + " WHERE ID = ? ";
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString( 1, user.getId() );
+			psmt.setString( 2, user.getName() );
+			psmt.setString( 3, user.getGender() );
+			psmt.setString( 4, user.getBirth() );
+			psmt.setString( 5, user.getMail() );
+			psmt.setString( 6, user.getPhone() );
+			psmt.setString( 7, user.getAddress() );
+			
+			psmt.setString( 8, user.getId() );
+			result = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("회원 정보 수정 시, 에러 발생");
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
@@ -59,7 +148,20 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int delete(String id) {
+		int result = 0;
+		String sql = " DELETE FROM USER "
+				   + " WHERE ID = ? ";
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString( 1, id );
+			
+			result = psmt.executeUpdate();
+		} catch(SQLException e) {
+			System.err.println("회원 정보 삭제 시, 에러 발생");
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	/**
@@ -79,7 +181,6 @@ public class UserRepository extends JDBConnection {
 	    return token;
 	}
 
-	
 	
 	/**
 	 * 토큰 정보 조회
@@ -141,8 +242,6 @@ public class UserRepository extends JDBConnection {
 	}
 
 
-	
-	
 	/**
 	 * 자동 로그인 토큰 생성
 	 * @param userId
@@ -215,19 +314,6 @@ public class UserRepository extends JDBConnection {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
