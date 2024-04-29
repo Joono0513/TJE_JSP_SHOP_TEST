@@ -15,8 +15,8 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int insert(User user) {
 		int result = 0;
-		String sql = " INSERT INTO USER "
-				   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW()) ";
+		String sql = " INSERT INTO shop.user "
+				   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, now()) ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -47,8 +47,8 @@ public class UserRepository extends JDBConnection {
 	public User login(String id, String pw) {
 		User user = new User();
 		String sql = " SELECT * "
-				   + " FROM USER "
-				   + " WHERE ID = ? AND PASSWORD = ? ";
+				   + " FROM shop.user "
+				   + " WHERE id = ? AND password = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -58,7 +58,7 @@ public class UserRepository extends JDBConnection {
 			
 			if ( rs.next() ) {
 				user.setId( rs.getString("id") );
-				user.setPassword( rs.getString("pw") );
+				user.setPassword( rs.getString("password") );
 				return user;
 			}
 		} catch (SQLException e) {
@@ -78,8 +78,8 @@ public class UserRepository extends JDBConnection {
 	public User getUserById(String id) {
 		User user = new User();
 		String sql = " SELECT * "
-				   + " FROM USER "
-				   + " WHERE ID = ? ";
+				   + " FROM shop.user "
+				   + " WHERE id = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -114,12 +114,12 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int update(User user) {
 		int result = 0;
-		String sql = " UPDATE USER "
-				   + " SET ID = ?, NAME = ?, "
-				   + " GENDER = ?, BIRTH = ?, "
-				   + " MAIL = ?, PHONE = ?, "
-				   + " ADDRESS = ? "
-				   + " WHERE ID = ? ";
+		String sql = " UPDATE shop.user "
+				   + " SET id = ?, name = ?, "
+				   + " gender = ?, birth = ?, "
+				   + " mail = ?, phone = ?, "
+				   + " address = ? "
+				   + " WHERE id = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -149,8 +149,8 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int delete(String id) {
 		int result = 0;
-		String sql = " DELETE FROM USER "
-				   + " WHERE ID = ? ";
+		String sql = " DELETE FROM shop.user "
+				   + " WHERE id = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);

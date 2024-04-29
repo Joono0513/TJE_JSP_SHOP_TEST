@@ -17,7 +17,7 @@ public class ProductRepository extends JDBConnection {
 		List<Product> productList = new ArrayList<Product>();
 		
 		String sql = " SELECT * "
-				   + " FROM PRODUCT ";
+				   + " FROM product ";
 		
 		try {
 			stmt = con.createStatement();
@@ -57,8 +57,8 @@ public class ProductRepository extends JDBConnection {
 		
 		List<Product> productList = new ArrayList<Product>();
 		
-		String sql = " SELECT * FROM PRODUCT "
-				   + " WHERE NAME LIKE %?% ";
+		String sql = " SELECT * FROM product "
+				   + " WHERE name LIKE %?% ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -99,8 +99,8 @@ public class ProductRepository extends JDBConnection {
 		Product product = new Product();
 		
 		String sql = " SELECT * "
-				   + " FROM PRODUCT "
-				   + " WHERE PRODUCT_ID = ? ";
+				   + " FROM product "
+				   + " WHERE product_id = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class ProductRepository extends JDBConnection {
 	public int insert(Product product) {
 		int result = 0;
 		
-		String sql = " INSERT INTO PRODUCT VALUES "
+		String sql = " INSERT INTO product VALUES "
 				   + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
@@ -170,13 +170,13 @@ public class ProductRepository extends JDBConnection {
 	public int update(Product product) {
 		int result = 0;
 		
-		String sql = " UPDATE PRODUCT "
-				   + " SET PRODUCT_ID = ?, "
-				   + " NAME = ?, UNIT_PRICE = ?, "
-				   + " DESCRIPTION = ?, MANUFACTURER = ? "
-				   + " CATEGORY = ?, UNITS_IN_STOCK = ?"
-				   + " CONDITION = ?, FILE = ? "
-				   + " WHERE PRODUCT_ID = ? ";
+		String sql = " UPDATE product "
+				   + " SET product_id = ?, "
+				   + " name = ?, unit_price = ?, "
+				   + " description = ?, manufacturer = ? "
+				   + " categroy = ?, units_in_stock = ?"
+				   + " condition = ?, file = ? "
+				   + " WHERE product_id = ? ";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString( 1, product.getProductId() );
@@ -208,8 +208,8 @@ public class ProductRepository extends JDBConnection {
 	public int delete(String productId) {
 		int result = 0;
 		
-		String sql = " DELETE FROM PRODUCT "
-				   + " WHERE PRODUCT_ID = ? ";
+		String sql = " DELETE FROM product "
+				   + " WHERE product_id = ? ";
 		
 		try {
 			psmt = con.prepareStatement(sql);

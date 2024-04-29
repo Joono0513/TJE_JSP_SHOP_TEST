@@ -18,9 +18,9 @@ public class OrderRepository extends JDBConnection {
 	public int insert(Order order) {
 		int result = 0;
 		
-		String sql = " INSERT INTO ORDER "
-				   + " (SHIP_NAME, ZIP_CODE, COUNTRY, ADDRESS, "
-				   + " DATE, ORDER_PW, USER_ID, TOTAL_PRICE, PHONE) "
+		String sql = " INSERT INTO order "
+				   + " (ship_name, zip_code, country, address, "
+				   + " date, order_pw, user_id, total_price, phone) "
 				   + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 				
 		try {
@@ -53,7 +53,7 @@ public class OrderRepository extends JDBConnection {
 	public int lastOrderNo() {
 		int result = 0;
 		
-		String sql = " SELECT ORDER_NO FROM `ORDER` "
+		String sql = " SELECT order_no FROM `order` "
 				   + " ORDER BY DATE DESC LIMIT 1 ";
 		
 		try {
@@ -61,7 +61,7 @@ public class OrderRepository extends JDBConnection {
 			rs = psmt.executeQuery();
 			
 			if (rs.next()) {
-				result = rs.getInt("ORDER_NO");
+				result = rs.getInt("order_no");
 			}
 			
 		} catch (SQLException e) {
@@ -82,8 +82,8 @@ public class OrderRepository extends JDBConnection {
 		List<Product> boardList = new ArrayList<Product>();
 		
 		// SQL 수정 필요(JOIN)
-		String sql = " SELECT * FROM ORDER "
-				   + " WHERE USER_ID = ? ";
+		String sql = " SELECT * FROM order "
+				   + " WHERE user_id = ? ";
 		
 		try {
 			stmt = con.createStatement();

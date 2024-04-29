@@ -16,9 +16,9 @@ public class ProductIORepository extends JDBConnection {
 	 */
 	public int insert(Product product) {
 		int result = 0;
-		String sql = " INSERT INTO PRODUCT_IO "
-				   + " (PRODUCT_ID, ORDER_NO, AMOUNT, TYPE, IO_DATE, USER_ID) "
-				   + " VALUES (?, ?, ?, ?, NOW(), ? )" ;
+		String sql = " INSERT INTO product_io "
+				   + " (product_id, order_no, amount, type, io_date, user_id) "
+				   + " VALUES (?, ?, ?, ?, now(), ? )" ;
 		
 		try {
 			psmt = con.prepareStatement(sql);
