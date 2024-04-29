@@ -11,6 +11,21 @@
 </head>
 <body>   
 	<% 
+		String rememberId = "";
+		String userId = "";
+		Cookie[] cookies = request.getCookies();
+		if( cookies != null ) {
+			for( int i = 0; i < cookies.length; i++ ) {
+				Cookie cookie = cookies[i];
+				String cookieName = cookie.getName();
+				String cookieValue = URLDecoder.decode( cookie.getValue(), "UTF-8" );
+				switch(cookieName) {
+					case "userId"		: userId = cookieValue; break;
+					case "rememberId" 	: rememberId = cookieValue; break;
+				}
+			}
+		}
+	
 		String root = request.getContextPath();
 		String error = request.getParameter("error");
 		

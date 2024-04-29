@@ -1,5 +1,6 @@
 package shop.dao;
 
+import java.security.spec.RSAKeyGenParameterSpec;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +95,9 @@ public class OrderRepository extends JDBConnection {
 				
 				// 알맞은 것으로 적용
 				order.setOrderNo( rs.getInt("orderNo") );
-				order.setShipName( rs.getString("shipName") );
+				product.setName( rs.getString("name") );
 				product.setUnitPrice( rs.getInt("price") );
+				product.setQuantity( rs.getInt("quantity") );
 				
 			}
 			
@@ -103,6 +105,7 @@ public class OrderRepository extends JDBConnection {
 			System.err.println("회원 주문 내역 조회 시, 예외 발생");
 			e.printStackTrace();
 		}
+		return boardList;
 	}
 	
 	/**
